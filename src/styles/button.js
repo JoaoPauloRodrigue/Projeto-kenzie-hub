@@ -30,6 +30,20 @@ export const StyledBtn = styled.button`
             font-size: 12px;
           }
         `;
+
+      case "delete":
+        return css`
+          padding: 10px 22.3336px;
+          font-family: "Inter";
+          font-weight: 500;
+          font-size: 12.8347px;
+          border-radius: 4px;
+
+          @media (min-width: 700px) {
+            padding: 13px 22.3336px;
+            font-size: 16px;
+          }
+        `;
     }
   }}
 
@@ -71,6 +85,18 @@ export const StyledBtn = styled.button`
         return css`
           background-color: var(--color-grey-3);
           border: 1.2px solid var(--color-grey-3);
+          color: var(--color-grey-0);
+
+          &:hover {
+            background-color: var(--color-grey-2);
+            border: 1.2px solid var(--color-grey-2);
+          }
+        `;
+
+      case "btnGrey2":
+        return css`
+          background-color: var(--color-grey-1);
+          border: 1.2px solid var(--color-grey-1);
           color: var(--color-grey-0);
 
           &:hover {
