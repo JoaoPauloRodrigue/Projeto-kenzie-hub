@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { apiKenzieHub } from "../services/api";
 
 export const TechContext = createContext({});
@@ -33,9 +34,10 @@ export const TechProvider = ({ children }) => {
         },
       });
 
-      setCardData([cardData.response.data]);
+      setCardData([...cardData, response.data]);
+      toast.success("Tecnologia cadastrada com sucesso!");
     } catch (error) {
-      console.log("error");
+      toast.error(error.response.data.message);
     }
   };
 
