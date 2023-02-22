@@ -5,14 +5,13 @@ import { useContext } from "react";
 import { TechContext } from "../../Providers/TechContext";
 import { useForm } from "react-hook-form";
 
-export const ModalRegisterTech = () => {
+export const ModalRegisterTech = ({ setModal }) => {
   const { cardTechAdd } = useContext(TechContext);
 
   const { register, handleSubmit } = useForm();
 
   const techAddSubmit = (formData) => {
     cardTechAdd(formData);
-    console.log(formData);
   };
 
   return (
@@ -20,7 +19,7 @@ export const ModalRegisterTech = () => {
       <StyledModal>
         <div className="header-modal-title">
           <h2>Cadastrar Tecnologia</h2>
-          <span>X</span>
+          <span onClick={() => setModal(false)}>X</span>
         </div>
         <form className="formModal" onSubmit={handleSubmit(techAddSubmit)}>
           <div>
@@ -54,12 +53,25 @@ export const ModalRegisterTech = () => {
 };
 
 export const ModalEditAndDelete = () => {
+  const { cardTechDelete, editCard, setEditCard, cardTechEdit, cardData } =
+    useContext(TechContext);
+
+  const { register, handleSubmit } = useForm();
+
+  const techEditSubmit = (formData) => {
+    cardTechEdit(formData);
+  };
+
+  const techDeleteSubmit = (formData) => {
+    cardTechDelete(formData);
+  };
+
   return (
     <>
-      <StyledModal>
+      <StyledModal role="dialog">
         <div className="header-modal-title">
           <h2>Tecnologia Detalhes</h2>
-          <span>X</span>
+          <span onClick={() => setEditCard(null)}>X</span>
         </div>
 
         <form className="formModal">
@@ -83,11 +95,21 @@ export const ModalEditAndDelete = () => {
           </div>
 
           <div className="container-btn-modal-edit-delete">
-            <StyledBtn type="submit" btnSize="default" btnColor="primario">
+            <StyledBtn
+              type="submit"
+              btnSize="default"
+              btnColor="primario"
+              onClick={() => techEditSubmit(cardData)}
+            >
               Salvar Alterações
             </StyledBtn>
 
-            <StyledBtn type="submit" btnSize="delete" btnColor="btnGrey2">
+            <StyledBtn
+              onClick={() => techDeleteSubmit(cardData.id)}
+              type="submit"
+              btnSize="delete"
+              btnColor="btnGrey2"
+            >
               Excluir
             </StyledBtn>
           </div>
