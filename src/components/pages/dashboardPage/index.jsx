@@ -3,8 +3,14 @@ import { Header } from "../../Header";
 import { BsPlusSquareFill } from "react-icons/bs";
 import { CardTechList } from "../../CardTechList";
 import { ModalEditAndDelete, ModalRegisterTech } from "../../Modal";
+import { useContext, useState } from "react";
+import { TechContext } from "../../../Providers/TechContext";
 
 export const DashboardPage = () => {
+  const [modal, setModal] = useState(false);
+
+  const { editCard } = useContext(TechContext);
+
   return (
     <>
       <Header />
@@ -12,11 +18,15 @@ export const DashboardPage = () => {
         <div>
           <div className="container-tech-btn-add">
             <h2>Tecnologias</h2>
-            <BsPlusSquareFill />
+            <BsPlusSquareFill
+              onClick={() => {
+                setModal(true);
+              }}
+            />
           </div>
           <CardTechList />
-          <ModalRegisterTech />
-          {/* <ModalEditAndDelete /> */}
+          {modal ? <ModalRegisterTech setModal={setModal} /> : null}
+          {editCard ? <ModalEditAndDelete /> : null}
         </div>
       </StyledContainerMainDash>
     </>
