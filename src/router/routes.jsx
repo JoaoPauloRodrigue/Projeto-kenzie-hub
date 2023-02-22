@@ -4,6 +4,7 @@ import { LandingPage } from "../components/pages/landingPage";
 import { RegisterPage } from "../components/pages/registerPage";
 import { DashboardPage } from "../components/pages/dashboardPage";
 import { ProtectedRoutes } from "../components/pages/ProtectedRoutes";
+import { TechProvider } from "../Providers/TechContext";
 
 export const RoutesPage = () => {
   return (
@@ -12,7 +13,14 @@ export const RoutesPage = () => {
       <Route path="/register" element={<RegisterPage />} />
 
       <Route path="/dashboard" element={<ProtectedRoutes />}>
-        <Route index element={<DashboardPage />} />
+        <Route
+          index
+          element={
+            <TechProvider>
+              <DashboardPage />
+            </TechProvider>
+          }
+        />
       </Route>
     </Routes>
   );
