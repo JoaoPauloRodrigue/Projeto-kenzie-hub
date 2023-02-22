@@ -1,8 +1,12 @@
 import logo from "../../assets/image/Logo.svg";
 import { StyledContainerHeaderAndNav } from "./header";
 import { StyledBtn } from "../../styles/button";
+import { useContext } from "react";
+import { UserContext } from "../../Providers/UserContext";
 
-export const Header = ({ userLogin, userLogOut }) => {
+export const Header = () => {
+  const { userLogin, userLogOut } = useContext(UserContext);
+
   return (
     <>
       <StyledContainerHeaderAndNav>

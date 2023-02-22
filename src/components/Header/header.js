@@ -1,16 +1,21 @@
 import styled from "styled-components";
 
 export const StyledContainerHeaderAndNav = styled.div`
+  width: 100%;
   & nav {
     padding: 30px 0px;
     border-bottom: 1px solid var(--color-grey-3);
 
     @media (min-width: 700px) {
-      padding: 30px 200px;
+      padding: 30px 0px;
+      display: flex;
+      justify-content: center;
     }
   }
 
   .container-nav-and-btn-logOut {
+    max-width: 780px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -29,7 +34,9 @@ export const StyledContainerHeaderAndNav = styled.div`
 
   & header {
     @media (min-width: 700px) {
-      padding: 0px 200px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
     }
   }
   .container-header-info-user {
@@ -39,9 +46,11 @@ export const StyledContainerHeaderAndNav = styled.div`
     padding: 34.5px 0px;
 
     @media (min-width: 700px) {
+      max-width: 780px;
+      display: flex;
       flex-direction: row;
       justify-content: space-between;
-      align-items: center;
+      width: 100%;
     }
 
     & h1 {
