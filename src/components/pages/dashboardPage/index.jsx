@@ -1,10 +1,10 @@
 import { StyledContainerMainDash } from "./dashboarPage";
 import { Header } from "../../Header";
 
-export const DashboardPage = ({ userLogin, userLogOut }) => {
+export const DashboardPage = () => {
   return (
     <>
-      <Header userLogin={userLogin} userLogOut={userLogOut} />
+      <Header />
       <StyledContainerMainDash>
         <div>
           <h2>Que pena! Ainda estamos em desenvolvimento:(</h2>

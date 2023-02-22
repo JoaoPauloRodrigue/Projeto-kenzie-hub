@@ -5,31 +5,10 @@ import { useForm } from "react-hook-form";
 import { StyledForm, StyledContainerLoginRegister } from "./Form";
 import { StyledBtn } from "../../styles/button";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { apiKenzieHub } from "../../services/api";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../../Providers/UserContext";
 
-export const FormLogin = ({ setUserLogin }) => {
-  const [loding, setLoding] = useState(false);
-  const navigate = useNavigate();
-
-  const LoginUser = async (formData) => {
-    try {
-      const response = await apiKenzieHub.post("sessions", formData);
-      toast.success("Login efetuado com sucesso!");
-      setUserLogin(response.data.user);
-      localStorage.setItem("@TOKEN", response.data.token);
-      localStorage.setItem("@USERID", response.data.user.id);
-      navigate("/dashboard");
-
-      setLoding(true);
-    } catch (error) {
-      toast.error(error.response.data.message);
-    } finally {
-      setLoding(false);
-    }
-  };
-
+export const FormLogin = () => {
   const landingPageSchema = yup.object().shape({
     email: yup
       .string()
@@ -40,6 +19,8 @@ export const FormLogin = ({ setUserLogin }) => {
       .required("A senha é obrigatória.")
       .matches(/.{6,}/, "É necessário no mínimo 6 caracteres."),
   });
+
+  const { LoginUser, loding, setLoding } = useContext(UserContext);
 
   const {
     register,
@@ -54,6 +35,7 @@ export const FormLogin = ({ setUserLogin }) => {
   const LoginSubmit = async (data) => {
     await LoginUser(data, setLoding);
   };
+
   return (
     <StyledContainerLoginRegister>
       <StyledForm onSubmit={handleSubmit(LoginSubmit)}>
@@ -97,8 +79,6 @@ export const FormLogin = ({ setUserLogin }) => {
 };
 
 export const FormRegister = () => {
-  const changeNavigate = useNavigate();
-
   const RegisterPageSchema = yup.object().shape({
     name: yup
       .string()
@@ -129,6 +109,8 @@ export const FormRegister = () => {
     course_module: yup.string().required("Selecionar um módulo é obrigatório"),
   });
 
+  const { registeredUser } = useContext(UserContext);
+
   const {
     register,
     handleSubmit,
@@ -138,17 +120,6 @@ export const FormRegister = () => {
     mode: "onChange",
     resolver: yupResolver(RegisterPageSchema),
   });
-
-  const registeredUser = async (data) => {
-    try {
-      const response = await apiKenzieHub.post("users", data);
-      toast.success("Conta criada com sucesso!");
-    } catch (error) {
-      toast.error(error.response.data.message);
-    } finally {
-      changeNavigate("/");
-    }
-  };
 
   const RegisterSubmit = async (data) => {
     await registeredUser(data);
