@@ -12,6 +12,7 @@ export const ModalRegisterTech = ({ setModal }) => {
 
   const techAddSubmit = (formData) => {
     cardTechAdd(formData);
+    setModal(false);
   };
 
   return (
@@ -53,17 +54,19 @@ export const ModalRegisterTech = ({ setModal }) => {
 };
 
 export const ModalEditAndDelete = () => {
-  const { cardTechDelete, editCard, setEditCard, cardTechEdit, cardData } =
+  const { cardTechDelete, setEditCard, cardTechEdit, titleCard } =
     useContext(TechContext);
 
   const { register, handleSubmit } = useForm();
 
   const techEditSubmit = (formData) => {
     cardTechEdit(formData);
+    setEditCard(null);
   };
 
-  const techDeleteSubmit = (formData) => {
-    cardTechDelete(formData);
+  const techDeleteSubmit = () => {
+    cardTechDelete();
+    setEditCard(null);
   };
 
   return (
@@ -74,14 +77,14 @@ export const ModalEditAndDelete = () => {
           <span onClick={() => setEditCard(null)}>X</span>
         </div>
 
-        <form className="formModal">
+        <form className="formModal" onSubmit={handleSubmit(techEditSubmit)}>
           <div>
             <label htmlFor="title">Nome do projeto</label>
             <Input
               type="text"
               id="title"
-              placeholder="Material UI"
-              register={register("title")}
+              placeholder={`${titleCard}`}
+              disabled
             />
           </div>
 
@@ -95,18 +98,13 @@ export const ModalEditAndDelete = () => {
           </div>
 
           <div className="container-btn-modal-edit-delete">
-            <StyledBtn
-              type="submit"
-              btnSize="default"
-              btnColor="primario"
-              onClick={() => techEditSubmit(cardData)}
-            >
+            <StyledBtn type="submit" btnSize="default" btnColor="primario">
               Salvar Alterações
             </StyledBtn>
 
             <StyledBtn
-              onClick={() => techDeleteSubmit(cardData.id)}
-              type="submit"
+              onClick={() => techDeleteSubmit()}
+              type="button"
               btnSize="delete"
               btnColor="btnGrey2"
             >

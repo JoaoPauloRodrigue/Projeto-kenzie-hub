@@ -21,4 +21,20 @@ export const StyledCardTechContainer = styled.section`
       padding: 20px;
     }
   }
+
+  .container-not-tech {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  & p {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-grey-0);
+
+    @media (min-width: 700px) {
+      font-size: 18px;
+    }
+  }
 `;
