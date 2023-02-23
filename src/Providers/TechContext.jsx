@@ -7,7 +7,7 @@ export const TechContext = createContext({});
 export const TechProvider = ({ children }) => {
   const [cardData, setCardData] = useState([]);
   const [editCard, setEditCard] = useState(null);
-  const [OpenEditModal, setOpenEditModal] = useState(false);
+  const [titleCard, setTitleCard] = useState([]);
 
   //carrega a lista de cardtech
   useEffect(() => {
@@ -43,11 +43,11 @@ export const TechProvider = ({ children }) => {
     }
   };
 
-  const cardTechEdit = async (idCard, formData) => {
+  const cardTechEdit = async (formData) => {
     try {
       const token = localStorage.getItem("@TOKEN");
       const response = await apiKenzieHub.put(
-        `/users/techs/${idCard}`,
+        `/users/techs/${editCard}`,
         formData,
         {
           headers: {
@@ -55,8 +55,9 @@ export const TechProvider = ({ children }) => {
           },
         }
       );
+
       const updatedEditCardData = cardData.map((card) => {
-        if (idCard === card.id) {
+        if (editCard === card.id) {
           return { ...card, ...formData };
         } else {
           return card;
@@ -65,24 +66,25 @@ export const TechProvider = ({ children }) => {
       setCardData(updatedEditCardData);
       toast.success("Tecnologia editada com sucesso!");
     } catch (error) {
-      console.log("error");
+      console.log(error);
     }
   };
 
-  const cardTechDelete = async (idCard) => {
+  const cardTechDelete = async () => {
     try {
       const token = localStorage.getItem("@TOKEN");
-      const response = await apiKenzieHub.delete(`/users/techs/${idCard}`, {
+      const response = await apiKenzieHub.delete(`/users/techs/${editCard}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      const updatedCardData = cardData.filter((card) => card.id !== idCard);
+      //atualizar página front end
+      const updatedCardData = cardData.filter((card) => card.id !== editCard);
       setCardData(updatedCardData);
       toast.success("Tecnologia deletada com sucesso!");
     } catch (error) {
-      console.log("error");
+      console.log(error);
     }
   };
   return (
@@ -94,8 +96,8 @@ export const TechProvider = ({ children }) => {
         editCard,
         setEditCard,
         cardTechDelete,
-        OpenEditModal,
-        setOpenEditModal,
+        titleCard,
+        setTitleCard,
       }}
     >
       {children}
